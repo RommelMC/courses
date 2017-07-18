@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comments</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'users/bootstrap/css/bootstrap.css'%}">
+</head>
+<body>
+    <div class="container">
+        <div id='info'>
+            <h1>{{course.name}}</h1>
+            <p>{{course.description.content}}</p>
+        </div>
+        <h3>Comments:</h3>
+        {%for comment in comments%}
+        <div>
+            <h5>{{comment.created_at}}</h5>
+            <p>{{comment.content}}</p>
+        </div>
+        {%endfor%}
+        <form action="{%url 'addcomment' id=course.id %}" method='POST'>
+            {%csrf_token%}
+            <textarea name="comment" style='width: 300px; height: 70px;'></textarea>
+            <div>
+                <input class='btn btn-success' type="submit" value='Add comment'>
+                <a class='btn' href="{%url 'index'%}">Go back</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

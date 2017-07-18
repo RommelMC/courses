@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'users/bootstrap/css/bootstrap.css'%}">
+    <style>
+        tr>td{
+            border-right: 2px solid black;
+        }
+        tr>td:last-child{
+            border-right:none
+        }
+        tr>th{
+            border-right: 2px solid black;
+        }
+        tr>th:last-child{
+            border-right: none
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Add a new course</h2>
+        <form action="{%url 'add'%}" method='POST'>
+            {%csrf_token%}
+            <div>
+                <label style='display: inline-block; width: 100px;'>Name:</label>
+                <input name='name' type="text" style='width: 400px;'>
+            </div>
+            <div>
+                <label style='display: inline-block; width: 100px; vertical-align: top;'>Description</label>
+                <textarea name="desc" style='width: 400px; height: 100px;'></textarea>
+            </div>
+             <input class='btn btn-success' style='display:block; margin-left: 465px;'type="Submit" value='Add'> 
+        </form>
+        <h2>Courses</h2>
+        <table class='table table-bordered table-striped' style='border: 2px solid black;'>
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Description</th>
+                    <th>Date Added</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for course in courses%}
+                <tr>
+                    <td>{{course.name}}</td>
+                    <td>{{course.description.content}}</td>
+                    <td>{{course.created_at}}</td>
+                    <td>
+                        <a href="{%url 'destroy' id=course.id %}">remove</a>
+                        <a style='margin-left: 20px;' href="{%url 'comment' id=course.id %}">comments</a>
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
